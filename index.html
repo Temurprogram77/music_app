@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.css"
+        integrity="sha512-6p+GTq7fjTHD/sdFPWHaFoALKeWOU9f9MPBoPnvJEWBkGS4PKVVbCpMps6IXnTiXghFbxlgDE8QRHc3MU91lJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="css/style.css">
+
+<body>
+    <div class="wrapper">
+        <header>
+            <button class="hdbtn">
+                <i class="ri-reply-fill"></i>
+            </button>
+            <h3 class="p-now">Playing now</h3>
+            <button class="hdbtn">
+                <i class="ri-list-check"></i>
+            </button>
+        </header>
+        <div class="player">
+            <div class="img-area">
+                <img src="assets/img/alphabet.png" alt="">
+            </div>
+            <div class="img-song-details">
+                <h1 class="name">Animation</h1>
+                <h3 class="artist">Coding</h3>
+            </div>
+            <div class="audioC">
+                <div class="song-timer">
+                    <span class="spend-time">0:00</span>
+                    <span class="max-duration">0:00</span>
+                </div>
+                <div class="progress-area" id="progress-area">
+                    <div class="progress-bar" id="progress-bar">
+                        <audio id="main-audio" src="assets/music/Emin & JONY - Камин.mp3"></audio>
+                    </div>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="btnC" id="prev">
+                    <i class="ri-rewind-start-mini-fill"></i>
+                </button>
+                <button class="play-pause btnC">
+                    <i class="ri-play-large-fill"></i>
+                </button>
+                <button class="btnC" id="next">
+                    <i class="ri-forward-end-mini-line"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+    <script src="music.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

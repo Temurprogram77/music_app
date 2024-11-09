@@ -1,0 +1,181 @@
+
+// let wrapper = document.querySelector(".wrapper"),
+//   musicImg = wrapper.querySelector("img"),
+//   musicName = wrapper.querySelector(".name"),
+//   musicArstists = wrapper.querySelector(".artist"),
+//   playPauseBtn = wrapper.querySelector(".play-pause"),
+//   prevBtn = wrapper.querySelector("#prev"),
+//   nextBtn = wrapper.querySelector("#next"),
+//   mainBtn = wrapper.querySelector("#main-audio"),
+//   progressArea = wrapper.querySelector(".progress-area"),
+//   progressBar = progressArea.querySelector(".progress-bar");
+
+// let musicIndex = Math.floor(Math.random() * allMusic.length);
+// let isMusicPaused = true;
+
+// window.addEventListener("load", () => {
+//   loadMusic(musicIndex);
+// });
+
+// function loadMusic(indexNumb) {
+//   musicName.innerText = allMusic[indexNumb].name;
+//   musicArstists.innerText = allMusic[indexNumb].artist;  // To'g'rilandi
+//   musicImg.src = `assets/img/${allMusic[indexNumb].src}.png`;
+//   mainBtn.src = `assets/audio/${allMusic[indexNumb].src}.mp3`;  // To'g'rilandi
+// }
+
+// function playMusic() {
+//   wrapper.classList.add("paused");
+//   musicImg.classList.add("rotate");
+//   playPauseBtn.innerHTML = `<i class="ri-pause-line"></i>`;
+//   mainBtn.play();
+// }
+
+// function pauseMusic() {
+//   wrapper.classList.remove("paused");
+//   musicImg.classList.remove("rotate");
+//   playPauseBtn.innerHTML = `<i class="ri-play-large-fill"></i>`;
+//   mainBtn.pause();
+// }
+
+// function prevMusic() {
+//   musicIndex = musicIndex - 1 < 0 ? allMusic.length - 1 : musicIndex - 1;
+//   loadMusic(musicIndex);
+//   playMusic();
+// }
+
+// function nextMusic() {
+//   musicIndex = musicIndex + 1 >= allMusic.length ? 0 : musicIndex + 1;
+//   loadMusic(musicIndex);
+//   playMusic();
+// }
+
+// playPauseBtn.addEventListener("click", () => {
+//   isMusicPaused = wrapper.classList.contains("paused");
+//   isMusicPaused ? pauseMusic() : playMusic();
+// });
+
+// prevBtn.addEventListener("click", prevMusic);
+// nextBtn.addEventListener("click", nextMusic);
+
+// progressArea.addEventListener("click", (e) => {
+//   const progressWidth = progressArea.clientWidth;
+//   const clickedOffsetX = e.offsetX;
+//   const duration = mainBtn.duration;
+//   mainBtn.currentTime = (clickedOffsetX / progressWidth) * duration;
+// });
+
+// mainBtn.addEventListener("timeupdate", (e) => {
+//   const currentTime = e.target.currentTime;
+//   const duration = e.target.duration;
+//   let progressWidth = (currentTime / duration) * 100;
+//   progressBar.style.width = `${progressWidth}%`;
+
+//   let musicCurrenTime = wrapper.querySelector(".current-time");
+//   let musicDuration = wrapper.querySelector(".max-duration");
+
+//   musicCurrenTime.innerText = formatTime(currentTime);
+//   musicDuration.innerText = formatTime(duration);
+// });
+
+// function formatTime(time) {
+//   let minutes = Math.floor(time / 60);
+//   let seconds = Math.floor(time % 60);
+//   if (seconds < 10) seconds = `0${seconds}`;
+//   return `${minutes}:${seconds}`;
+// }
+
+// -----------------------------------------------------------
+let wrapper = document.querySelector(".wrapper"),
+  musicImg = wrapper.querySelector("img"),
+  musicName = wrapper.querySelector(".name"),
+  musicArstists = wrapper.querySelector(".artist"),
+  playPauseBtn = wrapper.querySelector(".play-pause"),
+  prevBtn = wrapper.querySelector("#prev"),
+  nextBtn = wrapper.querySelector("#next"),
+  mainAudio = wrapper.querySelector("#main-audio"),
+  progressArea = wrapper.querySelector(".progress-area"),
+  progressBar = progressArea.querySelector(".progress-bar");
+  let musicCurrenTime = wrapper.querySelector(".spend-time");
+
+let musicIndex = Math.floor(Math.random() * allMusic.length + 1);
+isMusicPaused = true;
+
+window.addEventListener("load", () => {
+  loadMusic(musicIndex);
+});
+
+function loadMusic(indexNumb) {
+  musicName.innerText = allMusic[indexNumb - 1].name;
+  musicName.innerText = allMusic[indexNumb - 1].artist;
+  musicImg.src = `assets/img/${allMusic[indexNumb - 1].img}.png`;
+  mainAudio.src = `assets/audio/${allMusic[indexNumb - 1].src}.mp3`;
+}
+
+function playMusic() {
+  wrapper.classList.add("paused");
+  musicImg.classList.add("rotate");
+  playPauseBtn.innerHTML = `<i class="ri-pause-line"></i>`;
+  mainAudio.play();
+}
+
+function pauseMusic() {
+  wrapper.classList.remove("paused");
+  musicImg.classList.remove("rotate");
+  playPauseBtn.innerHTML = `<i class="ri-play-large-fill"></i> `;
+  mainAudio.pause();
+}
+function prevMusic() {
+  musicIndex--;
+  musicIndex < 1 ? (musicIndex = allMusic.length) : (musicIndex = musicIndex);
+  loadMusic(musicIndex);
+  playMusic();
+}
+function nextMusic() {
+  musicIndex++;
+  musicIndex > allMusic.length ? (musicIndex = 1) : (musicIndex = musicIndex);
+  loadMusic(musicIndex);
+  playMusic();
+}
+playPauseBtn.addEventListener("click", () => {
+  const isMusicplay = wrapper.classList.contains("paused");
+  isMusicplay ? pauseMusic() : playMusic();
+});
+prevBtn.addEventListener("click", () => {
+  prevMusic();
+});
+nextBtn.addEventListener("click", () => {
+  nextMusic();
+});
+
+mainAudio.addEventListener("timeupdate", (e) => {
+  const currentTime = e.target.currentTime;
+  const duration = e.target.duration;
+  let progressWidth = (currentTime / duration) * 100;
+  progressBar.style.width = `${progressWidth}%`;
+
+  let currentMin = Math.floor(currentTime / 60);
+  let currentSec = Math.floor(currentTime % 60);
+  if (currentSec < 10) {
+    currentSec = `0${currentSec}`;
+  }
+  if (musicCurrenTime) {
+    musicCurrenTime.innerText = `${currentMin}:${currentSec}`;
+  } else {
+    console.log("element topilmadi!");
+  }
+});
+
+progressArea.addEventListener("click", (e)=>{
+  let progressWidth = progressArea.clientWidth;
+  let clickedOffsetX = e.offsetX;
+  let songDuration = mainAudio.duration;
+
+  mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
+  playMusic();
+})
+
+mainAudio.addEventListener("ended", () => {
+  nextMusic();
+});
+
